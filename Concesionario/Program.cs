@@ -1,4 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ConcesionarioContext") ?? throw new InvalidOperationException("Connection string 'ConcesionarioContext' not found.");
+
+builder.Services.AddDbContext<ConcesionarioContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
