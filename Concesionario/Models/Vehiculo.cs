@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,13 +10,20 @@ namespace Concesionario.Models
         [Key]
         public int Id { get; set; }
 
+        [Range(1, int.MaxValue, ErrorMessage = "Seleccione una marca")]
+        [Display(Name = "Marca")]
+        public int MarcaId { get; set; }
+
+        [ValidateNever]
+        public Marca? Marca { get; set; }
+
         [Required(ErrorMessage = "El modelo es obligatorio")]
-        [StringLength(100,ErrorMessage = "El modelo no puede tener más de 100 caracteres")]
-        [Display(Name="Modelo")]
+        [StringLength(100, ErrorMessage = "El modelo no puede tener más de 100 caracteres")]
+        [Display(Name = "Modelo")]
         public string Modelo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El año de fabricación es obligatorio")]
-        [Range(1950,2026,ErrorMessage = "El año debe estar entre 1950 y 2026")]
+        [Range(1950, 2026, ErrorMessage = "El año debe estar entre 1950 y 2026")]
         [Display(Name = "Año")]
         public int Anio { get; set; }
 

@@ -1,7 +1,7 @@
-
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Concesionario.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 public class VehiculosController : Controller
 {
@@ -13,7 +13,7 @@ public class VehiculosController : Controller
     }
 
     // GET: VEHICULOS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
         return View(await _context.Vehiculo.ToListAsync());
     }
@@ -39,6 +39,7 @@ public class VehiculosController : Controller
     // GET: VEHICULOS/Create
     public IActionResult Create()
     {
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre");
         return View();
     }
 
@@ -47,7 +48,7 @@ public class VehiculosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Modelo,Anio,Precio")] Vehiculo vehiculo)
+    public async Task<IActionResult> Create([Bind("Id,MarcaId,Modelo,Anio,Precio")] Vehiculo vehiculo)
     {
         if (ModelState.IsValid)
         {
@@ -55,6 +56,7 @@ public class VehiculosController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre", vehiculo.MarcaId);
         return View(vehiculo);
     }
 
@@ -71,6 +73,7 @@ public class VehiculosController : Controller
         {
             return NotFound();
         }
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre", vehiculo.MarcaId);
         return View(vehiculo);
     }
 
@@ -79,7 +82,7 @@ public class VehiculosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Modelo,Anio,Precio")] Vehiculo vehiculo)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id, MarcaId, Modelo, Anio, Precio")] Vehiculo vehiculo)
     {
         if (id != vehiculo.Id)
         {
