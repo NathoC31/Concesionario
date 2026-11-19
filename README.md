@@ -16,7 +16,7 @@ para gestionar el inventario de vehículos de un concesionario.
 |-------|------------|------|
 | 1 | Nathaly Cuasapaz | Fase 1 · Proyecto y entidad dependiente |
 | 2 | Pablo Loya | Fase 2 · Validaciones |
-| 3 | [Nombre] | Fase 3 · [título de la fase] |
+| 3 | Marlon Loya | Fase 3 · Relación uno a muchos |
 | 4 | [Nombre] | Fase 4 · [título de la fase] |
 
 ## Reglas del grupo
