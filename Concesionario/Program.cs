@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Concesionario.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ConcesionarioContext") ?? throw new InvalidOperationException("Connection string 'ConcesionarioContext' not found.");
 
 builder.Services.AddDbContext<ConcesionarioContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ConcesionarioContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -29,5 +33,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+app.MapRazorPages();
 app.Run();
