@@ -6,7 +6,9 @@ var connectionString = builder.Configuration.GetConnectionString("ConcesionarioC
 
 builder.Services.AddDbContext<ConcesionarioContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ConcesionarioContext>();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ConcesionarioContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
