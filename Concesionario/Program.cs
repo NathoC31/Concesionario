@@ -27,6 +27,48 @@ using (var scope = app.Services.CreateScope())
             await roleManager.CreateAsync(new IdentityRole(rol));
         }
     }
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // Usuario Vendedor
+    var vendedor = await userManager.FindByEmailAsync("vendedor@hbtechworks.com");
+
+    if (vendedor == null)
+    {
+        vendedor = new ApplicationUser
+        {
+            UserName = "vendedor@hbtechworks.com",
+            Email = "vendedor@hbtechworks.com",
+            EmailConfirmed = true
+        };
+
+        await userManager.CreateAsync(vendedor, "Vendedor2026!");
+    }
+
+    if (!await userManager.IsInRoleAsync(vendedor, "Vendedor"))
+    {
+        await userManager.AddToRoleAsync(vendedor, "Vendedor");
+    }
+
+    // Usuario Comprador
+    var comprador = await userManager.FindByEmailAsync("comprador@hbtechworks.com");
+
+    if (comprador == null)
+    {
+        comprador = new ApplicationUser
+        {
+            UserName = "comprador@hbtechworks.com",
+            Email = "comprador@hbtechworks.com",
+            EmailConfirmed = true
+        };
+
+        await userManager.CreateAsync(comprador, "Comprador2026!");
+    }
+
+    if (!await userManager.IsInRoleAsync(comprador, "Comprador"))
+    {
+        await userManager.AddToRoleAsync(comprador, "Comprador");
+    }
 }
 
 
