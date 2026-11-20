@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Concesionario.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
+[Authorize]
 public class VehiculosController : Controller
 {
     private readonly ConcesionarioContext _context;
@@ -12,12 +14,14 @@ public class VehiculosController : Controller
         _context = context;
     }
 
+    [AllowAnonymous]
     // GET: VEHICULOS
     public async Task<IActionResult> Index()
     {
         return View(await _context.Vehiculo.ToListAsync());
     }
 
+    [AllowAnonymous]
     // GET: VEHICULOS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
@@ -109,6 +113,7 @@ public class VehiculosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre", vehiculo.MarcaId);
         return View(vehiculo);
     }
 
